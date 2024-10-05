@@ -2,7 +2,7 @@
 
 import '@rainbow-me/rainbowkit/styles.css';
 // import EduchainTestnet from "../utils/Educhainrpc"
-import { lineasepoliachain } from '../utils/lineasepoliaChainConfig';
+import { neoxchain } from '../utils/neoxChainConfig';
 import {
   getDefaultConfig,
   RainbowKitProvider,
@@ -24,8 +24,8 @@ import React from 'react';
 
 const config = getDefaultConfig({
     appName: 'SkillSwap',
-    projectId: 'f49af14466b2311264be6349729cbf9e',
-    chains: [lineasepoliachain, mainnet, sepolia, polygon, optimism, base, arbitrum],
+    projectId: 'ee1bbbf63a01b69caefe3d762df5a7dc',
+    chains: [neoxchain, mainnet, sepolia, polygon, optimism, base, arbitrum],
     ssr: true, 
   });
 

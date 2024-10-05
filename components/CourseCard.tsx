@@ -68,7 +68,7 @@
 
 "use client"  //told
 import { purchaseCourse } from "@/utils/contract";
-import { lineasepoliachain } from "@/utils/lineasepoliaChainConfig";
+import { neoxchain } from "@/utils/neoxChainConfig";
 import { Button, Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import { ethers } from 'ethers';
 import { useEffect, useState } from "react";

@@ -1,9 +1,9 @@
 import { AbiCoder, ethers } from "ethers";
-import { lineasepoliachain } from "./lineasepoliaChainConfig";
+import { neoxchain } from "./neoxChainConfig";
 // import { getContract } from "viem";
 
 
-export const CONTRACT_ADDRESS = "0x400b52d8590408ca5d8d5b58c378153b5dab0d0a"; //linea.sol
+export const CONTRACT_ADDRESS = "0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8"; //neoxchain.sol
 
 export const CONTRACT_ABI = [
 	{
@@ -659,7 +659,7 @@ export const getNextCourseId = async (provider: ethers.Provider) => {
 //   };
 
 export const getAllCourses = async () => {
-	const provider = new ethers.JsonRpcProvider(lineasepoliachain.rpcUrls.default.http[0]);
+	const provider = new ethers.JsonRpcProvider(neoxchain.rpcUrls.default.http[0]);
 	const contract = getContract(provider);
 	const courseCount = await contract.nextCourseId();
 	
