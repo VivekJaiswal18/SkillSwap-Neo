@@ -1,19 +1,19 @@
 import { Chain } from 'wagmi/chains'
 
-export const neoxchain: Chain = {
-  id: 12227332,
-  name: 'NeoX T4',
+export const aiachain: Chain = {
+  id: 1320,
+  name: 'AIA Testnet',
   nativeCurrency: {
     decimals: 18,
-    name: 'ETH',
-    symbol: 'GAS',
+    name: 'AIA',
+    symbol: 'AIA',
   },
   rpcUrls: {
-    public: { http: ['https://neoxt4seed1.ngd.network'] },
-    default: { http: ['https://neoxt4seed1.ngd.network'] },
+    public: { http: ['https://aia-dataseed1-testnet.aiachain.org'] },
+    default: { http: ['https://aia-dataseed1-testnet.aiachain.org'] },
   },
   blockExplorers: {
-    default: { name: 'xt4scan', url: 'https://xt4scan.ngd.network/' },
+    default: { name: 'xt4scan', url: '' },
   },
   testnet: true
 };

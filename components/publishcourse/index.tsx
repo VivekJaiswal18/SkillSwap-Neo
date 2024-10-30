@@ -6,7 +6,7 @@ import { Card, CardFooter, CardHeader, cn, Input, NextUIProvider } from '@nextui
 import React from 'react';
 import { publishCourse } from '../../utils/contract';
 import { uploadToPinata } from '../../utils/upload';
-import { neoxchain } from '@/utils/neoxChainConfig';
+import { aiachain } from '@/utils/neoxChainConfig';
 import { Label } from 'flowbite-react';
 import { register } from 'module';
 import { Icons } from '../icons';
@@ -21,14 +21,14 @@ export default function PublishCourse() {
   const [content, setContent] = useState<File | null>(null);
   const [loading, setloading] = useState(false)
 
-  const switchToneoxchain = async () => {
+  const switchToaiachain = async () => {
     if (!window.ethereum) throw new Error("No crypto wallet found");
     
     try {
       // Try to switch to the EDU Chain
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: `0x${neoxchain.id.toString(16)}` }],
+        params: [{ chainId: `0x${aiachain.id.toString(16)}` }],
       });
     } catch (switchError: any) {
       // This error code indicates that the chain has not been added to MetaMask.
@@ -37,10 +37,10 @@ export default function PublishCourse() {
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [{
-              chainId: `0x${neoxchain.id.toString(16)}`,
-              chainName: neoxchain.name,
-              nativeCurrency: neoxchain.nativeCurrency,
-              rpcUrls: neoxchain.rpcUrls.default.http,
+              chainId: `0x${aiachain.id.toString(16)}`,
+              chainName: aiachain.name,
+              nativeCurrency: aiachain.nativeCurrency,
+              rpcUrls: aiachain.rpcUrls.default.http,
               blockExplorerUrls: ['https://xt4scan.ngd.network/']
             }]
           });
@@ -78,7 +78,7 @@ export default function PublishCourse() {
       await window.ethereum.request({ method: 'eth_requestAccounts' });
   
       // Switch to EDU Chain
-      await switchToneoxchain();
+      await switchToaiachain();
 
       // Upload image to Pinata
       const imageUri = await uploadToPinata(image, `${title}-image`, description);

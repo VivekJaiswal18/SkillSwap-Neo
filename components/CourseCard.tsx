@@ -68,7 +68,7 @@
 
 "use client"  //told
 import { purchaseCourse } from "@/utils/contract";
-import { neoxchain } from "@/utils/neoxChainConfig";
+import { aiachain } from "@/utils/neoxChainConfig";
 import { Button, Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import { ethers } from 'ethers';
 import { useEffect, useState } from "react";
@@ -89,7 +89,59 @@ interface CourseProps {
     isActive: boolean;
     contentURI: string;
   };
-}
+} 
+
+
+// import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/react";
+// import { ethers } from "ethers";
+// import { Course } from "../utils/cont";
+
+// interface CourseCardProps {
+//   course: Course & {
+//     formattedPrice: string;
+//     formattedDate: string;
+//   };
+// }
+
+// const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
+//   return (
+//     <Card className="w-full">
+//       <CardHeader className="flex flex-col gap-1">
+//         <h2 className="text-xl font-bold">{course.title}</h2>
+//         <p className="text-sm text-gray-500">
+//           Created by: {course.creator.slice(0, 6)}...{course.creator.slice(-4)}
+//         </p>
+//       </CardHeader>
+//       <CardBody>
+//         <p className="text-gray-700">{course.description}</p>
+//         <div className="mt-4 space-y-2">
+//           <p className="text-sm">
+//             <span className="font-semibold">Price:</span> {course.formattedPrice} ETH
+//           </p>
+//           <p className="text-sm">
+//             <span className="font-semibold">Purchases:</span> {course.purchaseCount.toString()}
+//           </p>
+//           <p className="text-sm">
+//             <span className="font-semibold">Created:</span> {course.formattedDate}
+//           </p>
+//         </div>
+//       </CardBody>
+//       <CardFooter>
+//         <button
+//           className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+//           onClick={() => {
+//             // Implement purchase functionality
+//             console.log("Purchase course:", course.id);
+//           }}
+//         >
+//           Purchase Course
+//         </button>
+//       </CardFooter>
+//     </Card>
+//   );
+// };
+
+// export default CourseCard;
 
 // export default function CourseCard({ course }: CourseProps) {
 //   return (
@@ -111,39 +163,39 @@ interface CourseProps {
 //     </Card>
 //   );
 // }
-const ipfsToHttps = (ipfsUrl: string) => {
-    if (ipfsUrl.startsWith('ipfs://')) {
-      return `https://ipfs.io/ipfs/${ipfsUrl.slice(7)}`;
-    }
-    return ipfsUrl;
-  };
+// const ipfsToHttps = (ipfsUrl: string) => {
+//     if (ipfsUrl.startsWith('ipfs://')) {
+//       return `https://ipfs.io/ipfs/${ipfsUrl.slice(7)}`;
+//     }
+//     return ipfsUrl;
+//   };
 
-export default function CourseCard({ course }: CourseProps) {
-    const [isPurchasing, setIsPurchasing] = useState(false);
-    const { address } = useAccount();
-    // const { chain } = useNetwork();
-    // const { switchNetwork } = useSwitchNetwork();
-    const [metadata, setMetadata] = useState<CourseMetadata | null>(null);
+// export default function CourseCard({ course }: CourseProps) {
+//     const [isPurchasing, setIsPurchasing] = useState(false);
+//     const { address } = useAccount();
+//     // const { chain } = useNetwork();
+//     // const { switchNetwork } = useSwitchNetwork();
+//     const [metadata, setMetadata] = useState<CourseMetadata | null>(null);
 
-    useEffect(() => {
-        const fetchMetadata = async () => {
-          try {
-            const response = await fetch(ipfsToHttps(course.contentURI));
-            const data = await response.json();
-            setMetadata(data);
-          } catch (error) {
-            console.error("Error fetching course metadata:", error);
-          }
-        };
+//     useEffect(() => {
+//         const fetchMetadata = async () => {
+//           try {
+//             const response = await fetch(ipfsToHttps(course.contentURI));
+//             const data = await response.json();
+//             setMetadata(data);
+//           } catch (error) {
+//             console.error("Error fetching course metadata:", error);
+//           }
+//         };
     
-        fetchMetadata();
-      }, [course.contentURI]);
+//         fetchMetadata();
+//       }, [course.contentURI]);
 
-    const handlePurchase = async () => {
-      if (!address) {
-        alert("Please connect your wallet");
-        return;
-      }
+//     const handlePurchase = async () => {
+//       if (!address) {
+//         alert("Please connect your wallet");
+//         return;
+//       }
   
     //   if (chain?.id !== eduChain.id) {
     //     try {
@@ -155,49 +207,49 @@ export default function CourseCard({ course }: CourseProps) {
     //     }
     //   }
   
-      setIsPurchasing(true);
-      try {
-        const signer = await new ethers.BrowserProvider(window.ethereum).getSigner();
-        await purchaseCourse(await signer, course.id, course.price);
-        alert("Course purchased successfully!");
-      } catch (error) {
-        console.error("Error purchasing course:", error);
-        alert("Failed to purchase course");
-      } finally {
-        setIsPurchasing(false);
-      }
-    };
+  //     setIsPurchasing(true);
+  //     try {
+  //       const signer = await new ethers.BrowserProvider(window.ethereum).getSigner();
+  //       await purchaseCourse(await signer, course.id, course.price);
+  //       alert("Course purchased successfully!");
+  //     } catch (error) {
+  //       console.error("Error purchasing course:", error);
+  //       alert("Failed to purchase course");
+  //     } finally {
+  //       setIsPurchasing(false);
+  //     }
+  //   };
 
-    if (!metadata) {
-        return <div>Loading course data...</div>;
-      }
+  //   if (!metadata) {
+  //       return <div>Loading course data...</div>;
+  //     }
   
-    return (
-      <Card shadow="sm">
-        <CardBody className="overflow-visible border-4 p-0">
-          <Image
-            shadow="sm"
-            radius="lg"
-            width="100%"
-            alt={metadata.title || `Course ${course.id}`}
-            className="w-full object-cover h-[140px]"
-            src={ipfsToHttps(metadata.image)}
-          />
-        </CardBody>
-        <CardFooter className="text-small justify-between flex-col items-start">
-          {/* <b>Course {course.id}</b> */}
-          <b>{metadata.title || `Course ${course.id}`}</b>
-          <p className="text-default-500">{metadata.description}</p>
-          <p className="text-default-500">{ethers.formatEther(course.price)} ETH</p>
-          <Button 
-            color="primary" 
-            onClick={handlePurchase} 
-            disabled={isPurchasing}
-          >
-            {isPurchasing ? "Purchasing..." : "Purchase Course"}
-          </Button>
-        </CardFooter>
-      </Card>
-    );
-  }
+  //   return (
+  //     <Card shadow="sm">
+  //       <CardBody className="overflow-visible border-4 p-0">
+  //         <Image
+  //           shadow="sm"
+  //           radius="lg"
+  //           width="100%"
+  //           alt={metadata.title || `Course ${course.id}`}
+  //           className="w-full object-cover h-[140px]"
+  //           src={ipfsToHttps(metadata.image)}
+  //         />
+  //       </CardBody>
+  //       <CardFooter className="text-small justify-between flex-col items-start">
+  //         {/* <b>Course {course.id}</b> */}
+  //         <b>{metadata.title || `Course ${course.id}`}</b>
+  //         <p className="text-default-500">{metadata.description}</p>
+  //         <p className="text-default-500">{ethers.formatEther(course.price)} ETH</p>
+  //         <Button 
+  //           color="primary" 
+  //           onClick={handlePurchase} 
+  //           disabled={isPurchasing}
+  //         >
+  //           {isPurchasing ? "Purchasing..." : "Purchase Course"}
+  //         </Button>
+  //       </CardFooter>
+  //     </Card>
+  //   );
+  // }
 
