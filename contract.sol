@@ -1,4 +1,4 @@
-contract address = 0x400b52d8590408ca5d8d5b58c378153b5dab0d0a
+contract address = 0xf6d3a05d646432107d37dfe3320f4e1d557736de
 
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
